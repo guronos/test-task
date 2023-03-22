@@ -55,6 +55,16 @@
 <script>
 import { players } from './const/const.js'
 export default {
+/**
+ * @vue-data {array} players - Входные данные, константа
+ * @vue-data {string} sortedBy - Ключ объекта из players по которому осуществляется сортировка, либо обратная сортировка. Возможные значения переменной - if, idReverse,
+ surname, surnameReverse, birthday, birthdayReverse.
+ * @vue-data {array} playersList - Массив сформированный при монтировании компонента  на основании players с объединением полей surname + name
+ * @vue-data {boolean} visible - Переменная определяющая видимость диалогового окна с предупреждением об уходе со страницы без сохранения данных
+ * @vue-data {boolean} observeСhanges - Переменная определяющая несохраненные изменения на странице
+ * @vue-data {array} groups - Счетчики кол-ва игроков в каждой группе
+ * @vue-data {object} dataPlayers - Итоговый массив отправляемый на сервер
+ */
   data () {
     return {
       players,
@@ -70,6 +80,9 @@ export default {
       dataPlayers: {}
     }
   },
+  /**
+   * @vue-mounted - Формирует массив на основании массива players с объединением полей surname + name
+   */
   mounted () {
     this.playersList = this.players.map(({ id, surname, name, birthday }) => ({
       id,
@@ -79,6 +92,9 @@ export default {
     })
     )
   },
+  /**
+   * @vue-beforeRouteLeave - Запрещает покидание страницы при observeСhanges = true
+   */
   beforeRouteLeave (to, from) {
     if (this.observeСhanges) {
       this.visible = true
@@ -88,18 +104,33 @@ export default {
     }
   },
   computed: {
+    /**
+     * Вычисляет список игроков с идентификатором группы 0
+     */
     showLst () {
       return this.playersList.filter(x => x.groupId === 0)
     },
+    /**
+     * Вычисляет список игроков с идентификатором группы 1
+     */
     showGroup1 () {
       return this.playersList.filter(x => x.groupId === 1)
     },
+    /**
+     * Вычисляет список игроков с идентификатором группы 2
+     */
     showGroup2 () {
       return this.playersList.filter(x => x.groupId === 2)
     },
+    /**
+     * Вычисляет список игроков с идентификатором группы 3
+     */
     showGroup3 () {
       return this.playersList.filter(x => x.groupId === 3)
     },
+    /**
+     * Сортирует список игроков с идентификатором группы 0 в зависимости от значения переменной sortedBy
+     */
     sortArr () {
       if (this.sortedBy === 'id' || this.sortedBy === 'idReverse') {
         const lstSort = this.playersList.filter(x => x.groupId === 0).sort((a, b) => a.id > b.id ? 1 : -1)
@@ -114,6 +145,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * Изменение идентификатора группы у игрока двойным кликом (распределение игроков по группам)
+     * @param {array} player - массив данных по игроку (sortedBy[i])
+     */
     transferToGroup (player) {
       this.observeСhanges = true
       if (this.groups.group_1 < 3) {
@@ -127,15 +162,29 @@ export default {
         this.showLst[this.showLst.indexOf(player)].groupId = 3
       }
     },
+    /**
+     * Изменение идентификатора группы у игрока по клику на начальное значение (0), освобождение "места" в группе
+     * @param {array} event - массив данных по игроку (sortedBy[i])
+     */
     backToPlayerList (event) {
       this.groups[`group_${event.groupId}`] -= 1
       event.groupId = 0
     },
+    /**
+     * Захват сущности ЛКМ и передача id игрока в событии (dataTransfer)
+     * @param {event} event - событие
+     * @param {array} item - массив данных по игроку (sortedBy[i])
+     */
     onDragStart (event, item) {
       event.dataTransfer.dropEffect = 'move'
       event.dataTransfer.effectAllowed = 'move'
       event.dataTransfer.setData('idPlayer', item.id.toString())
     },
+    /**
+     * Помещение перенесенной сущности в одну из групп
+     * @param {event} event - событие
+     * @param {number} group - номер группы в которую помещается сущность при перетаскивании
+     */
     onDrop (event, group) {
       this.observeСhanges = true
       if (this.groups[`group_${group}`] >= 3) {
@@ -150,6 +199,9 @@ export default {
         }
       })
     },
+    /**
+     * Отправка данных на сервер
+     */
     async submit () {
       this.visible = false
       this.observeСhanges = false
@@ -175,10 +227,15 @@ export default {
         }
       }
     },
+    /**
+     * Скрывает модальное окно, вызывается кликом на кнопку 'Отменить' при предупреждении о несохраненных изменениях
+     */
     noSaveData () {
-      this.observeСhanges = false
       this.visible = false
     },
+    /**
+     * Скрывает модальное окно, разрешает переход на другую страницу и программно осуществляет переход на гласную страницу, вызывается кликом на кнопку 'Сохранить' при предупреждении о несохраненных изменениях
+     */
     save () {
       this.observeСhanges = false
       this.visible = false

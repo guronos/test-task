@@ -53,7 +53,7 @@ img {
 }
 .main {
     text-align: left;
-    padding: 0 5vw;
+    padding: 0 2vw;
     font-size: 20px;
     font-weight: 300;
 }
