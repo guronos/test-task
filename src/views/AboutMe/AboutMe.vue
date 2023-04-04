@@ -3,27 +3,28 @@
     <div class="header">Обо мне</div>
   <div class="container">
     <div class="image">
-        <img src="https://picsum.photos/1900/1200" alt="Случайное изображение">
+        <img src="https://picsum.photos/580/360" alt="Случайное изображение">
     </div>
     <div class="main">
 <div class="name">Самойлин Вадим</div>
 <div class="age">29 лет</div>
 <p>Привет!</p>
-<p> С моим резюме можно ознакомится по <a href="https://stavropol.hh.ru/applicant/resumes/view?resume=bd6bc8dfff038f89b20039ed1f41306b303033">ссылке</a>.<br>
-    Увидеть мои pet-project можно на <a href="https://github.com/guronos">GitHub</a>
+<p> С моим резюме можно ознакомится по <a href="https://stavropol.hh.ru/applicant/resumes/view?resume=bd6bc8dfff038f89b20039ed1f41306b303033" title="Резюме">ссылке</a>.<br>
+    Увидеть мои pet-project можно на <a href="https://github.com/guronos" title="Github">GitHub</a>
 </p>
-<p>
-Основные навыки:<br />
-- HTML, CSS;<br />
-- JavaScript;<br />
-- Vue.js/Vuex;<br />
-- Опыт работы с фреймворками Vuetify, Bootstrap (теперь знаком и с PrimeVue);<br />
-- умение работать с авторизацией (JWT);<br />
-- Работа с Git;<br />
-- Компетентный пользователь Linux систем;<br />
-- опыт работы с WordPress (REST API);<br />
-- Базовые знания языка Python;<br />
-- Основы backend разработки (фреймворк FastApi (Python)).</p>
+<ul>
+Основные навыки:
+<li>HTML, CSS;</li>
+<li>JavaScript;</li>
+<li>Vue.js/Vuex;</li>
+<li>Опыт работы с фреймворками Vuetify, Bootstrap (теперь знаком и с PrimeVue);</li>
+<li>умение работать с авторизацией (JWT);</li>
+<li>Работа с Git;</li>
+<li>Компетентный пользователь Linux систем;</li>
+<li>опыт работы с WordPress (REST API);</li>
+<li>Базовые знания языка Python;</li>
+<li>Основы backend разработки (фреймворк FastApi (Python)).</li>
+</ul>
     </div>
   </div>
 </div>
@@ -36,6 +37,8 @@
 }
 .image {
     width: 30vw;
+    height: 360px;
+    background: #a89f9f;
 }
 img {
     width: 100%;
